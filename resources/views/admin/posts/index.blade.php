@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="container">
-   <h1>Elenco post</h1>
+   <h1>Lista dei post</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th scope="col">id</th>
-                <th scope="col">title</th>
-                <th scope="col">text</th>
+                <th scope="col">titolo</th>
+                <th scope="col">testo</th>
                 <th scope="col">slug</th>
             </tr>
         </thead>
