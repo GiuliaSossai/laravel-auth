@@ -21,12 +21,10 @@
                     <td>{{ $post->content }}</td>
                     <!-- <td>{{ $post->slug }}</td> -->
                     <td><a href="{{ route('admin.posts.show', $post) }}" class="btn btn-primary">show</a></td>
-                    <td><a href="" class="btn btn-warning">edit</a></td>
+                    <td><a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-warning">edit</a></td>
                     <td><a href="" class="btn btn-danger">delete</a></td>
                 </tr>
-            @endforeach
-            
-            
+            @endforeach    
         </tbody>
     </table>
 

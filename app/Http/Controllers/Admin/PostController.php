@@ -38,7 +38,27 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->validate(
+        //     [
+        //         'title'=>"required|min:2",
+        //         'content'=>"min:3"
+        //     ],
+        //     [
+        //         'title.required'=>'The title is compulsory',
+        //         'title.min'=>'The title is too short',
+        //         'content.min'=>'The description is too short'
+        //     ]
+        // );
+
+        // $data = $request->all();
+
+        // $new_post = new Post();
+        // $new_post->slug = Post::createSlug($new_post->title);
+        // $new_post->fill($data);
+        // $new_post->save();
+
+        // return redirect()->route('admin.posts.show', $new_post);
+
     }
 
     /**
@@ -65,7 +85,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        if($post){
+           return view('admin.posts.edit', compact('post')); 
+        }
+        abort(404, 'Il post che hai cercato non esiste');
     }
 
     /**
@@ -75,9 +99,32 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate(
+            [
+                'title'=>"required|min:2",
+                'content'=>"min:3"
+            ],
+            [
+                'title.required'=>'The title is compulsory',
+                'title.min'=>'The title is too short',
+                'content.min'=>'The description is too short'
+            ]
+        );
+
+        $data = $request->all();
+
+        //controllo sullo slug:
+        //genero un nuovo slug solo se il titolo del post è stato modificato
+        if($data['title'] != $post->title){
+            $data['slug'] = Post::createSlug($data['title']);
+        }
+
+        $post->update($data);
+
+        return redirect()->route('admin.posts.show', $post);
+
     }
 
     /**
