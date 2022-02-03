@@ -4,6 +4,10 @@
 <div class="container">
    <h1>Lista dei post</h1>
 
+   @if (session('deleted'))
+      <p class="alert alert-success my-3" role="alert"> {{ session('deleted') }} </p>
+    @endif
+
     <table class="table my-5">
         <thead>
             <tr>
@@ -22,7 +26,17 @@
                     <!-- <td>{{ $post->slug }}</td> -->
                     <td><a href="{{ route('admin.posts.show', $post) }}" class="btn btn-primary">show</a></td>
                     <td><a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-warning">edit</a></td>
-                    <td><a href="" class="btn btn-danger">delete</a></td>
+
+                    <td>
+                        <form 
+                            action="{{ route('admin.posts.destroy', $post) }}" method="POST"
+                            onsubmit="return confirm('Confermi l\'eliminazione di {{$post->title}}?')"
+                        >
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">delete</button>
+                        </form>   
+                  </td>
                 </tr>
             @endforeach    
         </tbody>
