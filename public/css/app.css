@@ -10962,3 +10962,8 @@ a.text-dark:focus {
   }
 }
 
+.gs-error {
+  color: red;
+  font-size: 10px;
+}
+

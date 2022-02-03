@@ -38,26 +38,30 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // $request->validate(
-        //     [
-        //         'title'=>"required|min:2",
-        //         'content'=>"min:3"
-        //     ],
-        //     [
-        //         'title.required'=>'The title is compulsory',
-        //         'title.min'=>'The title is too short',
-        //         'content.min'=>'The description is too short'
-        //     ]
-        // );
+        $request->validate(
+            [
+                'title'=>"required|min:2",
+                'content'=>"min:3"
+            ],
+            [
+                'title.required'=>'The title is compulsory',
+                'title.min'=>'The title is too short',
+                'content.min'=>'The description is too short'
+            ]
+        );
 
-        // $data = $request->all();
+        $data = $request->all();
 
-        // $new_post = new Post();
-        // $new_post->slug = Post::createSlug($new_post->title);
-        // $new_post->fill($data);
-        // $new_post->save();
+        $new_post = new Post();
+        //posso creare lo slug direttmente in $data
+        $data['slug'] = Post::createSlug($data['title']);
+        $new_post->fill($data);
+        
+        //$new_post->slug = Post::createSlug($new_post->title);
+        
+        $new_post->save();
 
-        // return redirect()->route('admin.posts.show', $new_post);
+        return redirect()->route('admin.posts.show', $new_post);
 
     }
 
