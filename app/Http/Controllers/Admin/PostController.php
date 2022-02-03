@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();   
+        $posts = Post::orderBy('id', 'desc')->paginate(4);   
         
         return view('admin.posts.index', compact('posts'));
     }
@@ -27,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -49,7 +49,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        if($post){
+           return view('admin.posts.show', compact('post')); 
+        }
+        //abort(404);
+        abort(404, 'Il post che hai cercato non esiste');
     }
 
     /**
